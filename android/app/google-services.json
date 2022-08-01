@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "522069685609",
+    "project_id": "flutter--sign-2742e",
+    "storage_bucket": "flutter--sign-2742e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522069685609:android:18badf2fa0d2a663b979f8",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522069685609-9e1jq27jlsb9vkcht6pbe6c5p93tnts5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frontend",
+            "certificate_hash": "5953b82df69bc2d1ad3758418efa45aae0586d1b"
+          }
+        },
+        {
+          "client_id": "522069685609-ejvt8ovkue75jiltkcpmqqfl7i922i29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Gi7WBe0KukfjYfk1Fy2yZg6PPua1Ffo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522069685609-ejvt8ovkue75jiltkcpmqqfl7i922i29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522069685609:android:9377100ed2ea7c17b979f8",
+        "android_client_info": {
+          "package_name": "com.example.google_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522069685609-ejvt8ovkue75jiltkcpmqqfl7i922i29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4Gi7WBe0KukfjYfk1Fy2yZg6PPua1Ffo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522069685609-ejvt8ovkue75jiltkcpmqqfl7i922i29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

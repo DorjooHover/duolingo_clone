@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:frontend/controllers/language.controller.dart';
+import 'package:frontend/models/language.model.dart';
 import 'package:frontend/screens/auth/hearAbout.dart';
 import 'package:frontend/screens/auth/seconscreen.dart';
+import 'package:frontend/services/language.service.dart';
 
 class ChooseLanguage extends StatefulWidget {
   const ChooseLanguage({Key? key}) : super(key: key);
@@ -12,7 +15,16 @@ class ChooseLanguage extends StatefulWidget {
 }
 
 class _ChooseLanguageState extends State<ChooseLanguage> {
+  final List<LanguageModel> _languages = [];
   @override
+  void initState() {
+    fetchLanguages().then((value) {
+      setState(() {
+        _languages.addAll(value);
+      });
+    });
+  }
+
   bool isHover = false;
   int i = -1;
   List<String> countries = [
@@ -26,7 +38,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
     "Uganda",
     "Uruguay"
   ];
-
+  String choseLangauge = '';
   int activeIndex = -1;
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +50,6 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
         leading: new IconButton(
             onPressed: () => {Navigator.pop(context)},
             icon: new Icon(Icons.arrow_back)),
-        // actions: [
-        //   LinearProgressIndicator(
-        //     value: 30,
-        //     // semanticsValue: ,
-        //     // color: Colors.brown,
-        //   )
-        // ],
       ),
       body: Column(
         children: <Widget>[
@@ -65,51 +70,49 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
               child: Container(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
                   child: ListView.builder(
-                    itemCount: countries.length,
+                    itemCount: _languages.isNotEmpty ? _languages.length : 0,
                     itemBuilder: (BuildContext context, int index) => Card(
-                      margin: EdgeInsets.all(0),
-                      color: Color(0xFF151e27),
-                      // padding: EdgeInsets.all(5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                              top: index == 0
-                                  ? Radius.circular(20)
-                                  : Radius.circular(0),
-                              bottom: index == countries.length - 1
-                                  ? Radius.circular(20)
-                                  : Radius.circular(0)),
-                          side: BorderSide(
-                              color: index == activeIndex
-                                  ? Color(0xFF5b879f)
-                                  : Color(0xFF3c4951),
-                              width: 3)),
-                      child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: ListTile(
-                          title: Text(
-                            '${countries[index]}',
-                            style: TextStyle(
+                        margin: EdgeInsets.all(0),
+                        color: Color(0xFF151e27),
+                        // padding: EdgeInsets.all(5),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: index == 0
+                                    ? Radius.circular(20)
+                                    : Radius.circular(0),
+                                bottom: index == _languages.length - 1
+                                    ? Radius.circular(20)
+                                    : Radius.circular(0)),
+                            side: BorderSide(
                                 color: index == activeIndex
-                                    ? Color(0xFF3f95c7)
-                                    : Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          // subtitle: Text('$index'),
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/india.png',
-                              width: 45,
-                            ),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              activeIndex = index;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
+                                    ? Color(0xFF5b879f)
+                                    : Color(0xFF3c4951),
+                                width: 3)),
+                        child: Padding(
+                            padding: EdgeInsets.all(5),
+                            child: ListTile(
+                                title: Text(
+                                  '${_languages[index].name}',
+                                  style: TextStyle(
+                                      color: index == activeIndex
+                                          ? Color(0xFF3f95c7)
+                                          : Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                // subtitle: Text('$index'),
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.network(
+                                    '${_languages[index].image}',
+                                    width: 45,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    choseLangauge = _languages[index].id;
+                                    activeIndex = index;
+                                  });
+                                }))),
                   )
                   // ),
                   )),
@@ -131,8 +134,12 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
             // color: Colors.red,
             child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HearAbout()));
+                  if (choseLangauge.isNotEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChooseLanguage()));
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     // elevation: 20,

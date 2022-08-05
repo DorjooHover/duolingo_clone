@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
+
 import 'package:frontend/screens/auth/index.dart';
 import 'package:frontend/screens/auth/signin.dart';
+import 'package:frontend/screens/pages/bottom_navbar.dart';
+import 'package:frontend/screens/pages/home.dart';
+import 'package:frontend/screens/pages/profile.dart';
+import 'package:frontend/themes/theme_constants.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
+class MyApp extends StatelessWidget {
+  MyApp({Key? key}) : super(key: key);
+  GoogleSignInAccount? _currentUser;
   // This widget is the root of your application.
   @override
+  void initState() {
+    _googleSignIn.onCurrentUserChanged.listen((account) {
+      _currentUser = account;
+    });
+    _googleSignIn.signInSilently();
+  }
+
   Widget build(BuildContext context) {
+    GoogleSignInAccount? user = _currentUser;
     return MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-        home: const AuthIndex());
+        theme: lightTheme,
+        home: (user == null) ? const AuthIndex() : Profile());
   }
 }
